@@ -44,7 +44,7 @@ Assuming `$HADOOP_HOME` and `$CASSANDRA_HOME` are installation directories of Ha
         13251 Jps
     
 5. Build code as instructed in last section.
-6. Load data: (assume code is down load under /home/nishant/Desktop/ch8/)
+6. Load data: (assume code is downloaded under `/home/nishant/Desktop/ch8/`)
   
         java -cp /home/nishant/ch8/target/masteringcassandra_ch8-1.0-jar-with-dependencies.jar in.naishe.mc.extra.LoadData
 
