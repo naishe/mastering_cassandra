@@ -35,11 +35,11 @@ MASTERING CASSANDRA CHAPTER 1 CODE NOTES
 
  a. Create a setup:
 
-     python setup.py
+        python setup.py
 
  b. Run a demonstration
 
-     python crud.py
+        python crud.py
 
 5. Errors and Exceptions:
 
