@@ -6,13 +6,13 @@ It assumes that you have Cassandra 1.1.x and Pycassa installed on your computer.
 
 ###1. Organization
 
-  *base_script.py*: It must be executed the first. It creates essential infrastructure for other scripts.
+  **base_script.py:** It must be executed the first. It creates essential infrastructure for other scripts.
 
-  _ch3* files_: These are the files that demonstrates the full code of snippets in chapter 3.
+  __ch3* files:__ These are the files that demonstrates the full code of snippets in chapter 3.
 
-  _util.py_: It has some utility methods.
+  __util.py:__ It has some utility methods.
 
-  _data directory_: Data directory has some preloaded data and an event generator that is used for creation of data.
+  __data directory:__ Data directory has some preloaded data and an event generator that is used for creation of data.
   
 ###2. How to use these files
 
