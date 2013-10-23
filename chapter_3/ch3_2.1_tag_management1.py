@@ -1,0 +1,67 @@
+#! /usr/bin/env python
+'''
+Demonstrates how simple group can be used as one-to-many
+relationship using a column family
+'''
+
+import util
+from pycassa.columnfamily import ColumnFamily
+from pycassa.types import *
+
+# Load data from data/movies
+def loadData():
+  con = util.getConnection()
+  cf = ColumnFamily(con, 'videos_denorm')
+  tagCF = ColumnFamily(con, 'tag_videos_composite')
+  movies = util.readCSV('data/movies')
+  for movie in movies:
+    title = movie[0]
+    uploader = movie[1]
+    runtime = int(movie[2]) #convert to match column validator
+    tags = movie[3]
+    rowKey = title+":"+uploader
+
+
+    print "Inserting in videos: {}.".format(str(movie))
+    row = \
+      {
+        'title':title,
+        'user_name':uploader,
+        'runtime_in_sec':runtime,
+      }
+
+    for tag in tags.split(','):
+      print 'adding tag: {0} for movie: {1}'.format(tag, title)
+      row['tag:{}'.format(tag.strip().lower())] = tag.strip()
+
+    print 'inserting denorm: {}'.format(row)
+    cf.insert(rowKey, row)
+
+  print 'finishished insertion.'    
+  con.dispose()
+
+def getByTag(tag):
+  print '''-- MOVIES GROUPED BY USER FOR A GIVE TAG --'''
+  print '''tag: {}'''.format(tag)
+  con = util.getConnection()
+  tagCF = ColumnFamily(con, 'tag_videos_composite')
+
+  movies = tagCF.get(tag.strip().lower())
+  for key, val in movies.iteritems():
+    compositeCol = key
+    print '([{0}],[{1}]) => {2}'.format(compositeCol[0], compositeCol[1], val)
+    
+  movieSlice = tagCF.get(tag.strip().lower(), column_start=("Kara", "The Croods:Kara"), column_finish=("Sally","Gx" ))
+  #movieSlice = tagCF.get(tag.strip().lower(), column_start=("Kara", ), column_finish=(("Leo Scott",False),))
+  print '-- SLICES --'
+  for key, val in movieSlice.iteritems():
+    compositeCol = key
+    print '([{0}],[{1}]) => {2}'.format(compositeCol[0], compositeCol[1], val)
+    
+
+  con.dispose()
+
+
+if __name__ == '__main__':
+  loadData()
+  #getByTag('action')
