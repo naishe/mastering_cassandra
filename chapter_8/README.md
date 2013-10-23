@@ -56,22 +56,22 @@ Assuming `$HADOOP_HOME` and `$CASSANDRA_HOME` are installation directories of Ha
 
         bin/cqlsh -3
         cqlsh> use testks;
-        cqlsh:testks> select * from "resultCF" limit 10;
-         key         | column1 | value
-        -------------+---------+-------
-            subjects |   count |     1
-                fine |   count |     2
-         immediately |   count |     3
-             worried |   count |     1
-           execution |   count |     1
-               Sends |   count |     1
-               claws |   count |     2
-                 WAS |   count |     4
-                lest |   count |     1
-            596-1887 |   count |     1
+				cqlsh:testks> select * from "resultCF" where key = 'the';
+				 key | count
+				-----+-------
+				 the |  1664
 
-        cqlsh:testks> select * from "resultCF" where key = 'the';
-         key | column1 | value
-        -----+---------+-------
-         the |   count |  1664
+				cqlsh:testks> select * from "resultCF" limit 10;
+				 key         | count
+				-------------+-------
+						subjects |     1
+								fine |     2
+				 immediately |     3
+						 worried |     1
+					 execution |     1
+							 Sends |     1
+							 claws |     2
+								 WAS |     4
+								lest |     1
+						596-1887 |     1
 
